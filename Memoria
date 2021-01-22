@@ -1,0 +1,30 @@
+1. Normalización de las tablas
+
+Tabla Casting:
+	cod_casting(PK): A; nombre: B; descripción: C; tipo: D; cod_cliente(FK): E
+	
+	A->BCDE F->A
+	
+	Normalización:
+	
+	R1:  {A,B,C,D}
+	R2:  {A,E}
+	
+Tabla Casting_online:
+	cod_casting(FK): A; num_personas: B; fecha: C; web: D;
+	
+	A->BCD
+	
+	Normalización:
+	
+	R1:  {A,B,C}
+	R2:  {A,D}
+	
+	Por si pudiesen existir varias webs (entonces no estaría en 1NF)
+	
+Tabla Casting_presencial:
+	cod_casting(FK): A; num_personas: B; fecha: C; cod_empleado(FK): D;
+	
+	A->BCD
+	
+	Ya está en 3NF
