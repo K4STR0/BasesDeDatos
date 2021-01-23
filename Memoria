@@ -24,6 +24,16 @@ Tabla Casting_presencial:
 	A->BCD
 	
 	Ya está en 3FN
+	R1:{A,B}
+	
+	
+Tabla Casting_perfil:
+	cod_perfil(PK): A; cod_casting(FK): B
+	
+	B -> A
+	
+	Ya está en 3FN
+	R1:{A,B}
 	
 Tabla Cliente:
 	cod_cliente(PK): A; nombre: B; dirección: C; telefono: D; contacto: E; actividad: F
@@ -47,7 +57,7 @@ Tabla Candidato:
 	
 	R1:{A,E,G,H,I,J}
 	R2:{A,B,C,D}
-	R3:{A,F] -> por si el cliente proporcionase varios teléfonos
+	R3:{A,F} -> por si el cliente proporcionase varios teléfonos
 	
 
 Tabla Adulto:
@@ -57,6 +67,71 @@ Tabla Adulto:
 	
 	Ya se encuentra en 3FN
 	R1:{A,B} 
+	
+
+Tabla Niño:
+	cod_candidato(PK): A; nombre_tutor:B
+	
+	A->B
+	
+	Ya se encuentra en 3FN
+	R1:{A,B}
+
+
+Tabla Perfil:
+	cod_perfil(PK): A; provincia: B; sexo: C; rango_edad: D; rango_altura: E; color_pelo: F; color_ojos: G; especialidad: H; experiencia: I
+	
+	A -> BCDEFGHI
+	
+	Ya se encuentra en 3FN
+	R1:{A,B,C,D,E,F,G,H,I}
+	
+Tabla Pruebas:
+	cod_prueba(PK): A; sala: B; descripcion: C; precio:D; cod_fase(FK): E
+	
+	A -> BCD E->A
+	
+	Normalización
+	
+	R1:{A,B,C,D}
+	R2:{A,E}
+	
+	
+Tabla representante:
+	dni(PK): A; nombre: B; direccion: C; telefono:D
+	
+	A -> BCD
+	
+	Ya se encuentra en 3FN
+	R1:{A,B,C,D}
+	
+	
+Tabla resultado_pruebas:
+	cod_prueba(PK):A; cod_casting(PK):B; cod_prueba(PK):C; superada: D
+	
+	A -> BCD
+	
+	Ya se encuentra en 3FN
+	R1:{A,B,C,D}
+	
+Tabla fase:
+	cod_fase(PK): A; cod_casting(FK): B
+	
+	
+	B->A
+	
+	Ya se encuentra en 3FN
+	R1:{A,B}
+	
+Tabla agente_casting:
+	cod_empleado(PK): A; dni: B; nombre: C; direccion: D
+	
+	A -> BCD
+	
+	Ya se encuentra en 3FN
+	R1:{A,B,C,D}
+	
+
 	
 	
 	
