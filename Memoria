@@ -15,7 +15,7 @@ Tabla Casting_online:
 	
 	A->BCD
 	
-	Ya está en 3NF
+	Ya está en 3FN
 	
 	
 Tabla Casting_presencial:
@@ -23,7 +23,7 @@ Tabla Casting_presencial:
 	
 	A->BCD
 	
-	Ya está en 3NF
+	Ya está en 3FN
 	
 Tabla Cliente:
 	cod_cliente(PK): A; nombre: B; dirección: C; telefono: D; contacto: E; actividad: F
@@ -48,6 +48,15 @@ Tabla Candidato:
 	R1:{A,E,G,H,I,J}
 	R2:{A,B,C,D}
 	R3:{A,F] -> por si el cliente proporcionase varios teléfonos
+	
+
+Tabla Adulto:
+	cod_candidato(PK): A; dni:B
+	
+	A->B
+	
+	Ya se encuentra en 3FN
+	R1:{A,B} 
 	
 	
 	
