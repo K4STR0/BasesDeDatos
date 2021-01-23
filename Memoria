@@ -3,7 +3,7 @@
 Tabla Casting:
 	cod_casting(PK): A; nombre: B; descripción: C; tipo: D; cod_cliente(FK): E
 	
-	A->BCDE F->A
+	A->BCDE E->A
 	
 	Normalización:
 	
