@@ -28,3 +28,36 @@ Tabla Casting_presencial:
 	A->BCD
 	
 	Ya está en 3NF
+	
+Tabla Cliente:
+	cod_cliente(PK): A; nombre: B; dirección: C; telefono: D; contacto: E; actividad: F
+	
+	Respecto a anteriores entregas vamos a dividir nombre(B) en nombre(B), apellido1(G) y apellido2(H)
+	Por tanto las df quedarían: A->BCDEFGH y B->GH
+	
+	Normalización:
+	
+	R1:{A,C,E,F}
+	R2:{A,B,G,H}
+	R3:{A,D] -> por si el cliente proporcionase varios teléfonos
+	
+Tabla Candidato:
+	cod_candidato(PK): A; nombre: B; apellido1: C; apellido2: D; direccion: E; telefono: F; nacimiento: G; importe: H; dni_representante(FK): I; cod_perfil(FK): J
+	
+	A->BCDEFGHIJ
+	B->CD
+	
+	Normalización
+	
+	R1:{A,E,G,H,I,J}
+	R2:{A,B,C,D}
+	R3:{A,F] -> por si el cliente proporcionase varios teléfonos
+	
+	
+	
+	
+	
+	
+	
+	
+	
