@@ -15,12 +15,8 @@ Tabla Casting_online:
 	
 	A->BCD
 	
-	Normalización:
+	Ya está en 3NF
 	
-	R1:  {A,B,C}
-	R2:  {A,D}
-	
-	Por si pudiesen existir varias webs (entonces no estaría en 1NF)
 	
 Tabla Casting_presencial:
 	cod_casting(FK): A; num_personas: B; fecha: C; cod_empleado(FK): D;
