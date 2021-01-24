@@ -1,9 +1,31 @@
 create domain Euros numeric(12,2);
+
 create domain Provincias char(20)
 	constraint comprobacion_provincia
 		check(value in('Albacete','Alicante','Almería','Álava','Asturias','Ávila','Badajoz','Islas Baleares','Barcelona','Bizkaia','Burgos','Cáceres','Cádiz','Cantabria','Castellón','Ciudad Real','Córdoba','A Coruña','Cuenca','Gipuzkoa','Girona','Granada','Guadalajara','Huelva','Huesca','Jaén','León','Lleida','Lugo','Madrid','Málaga','Murcia','Navarra','Ourense','Palencia','Las Palmas','Pontevedra','La Rioja','Salamanca','Santa Cruz de Tenerife','Segovia','Sevilla','Soria','Tarragona','Teruel','Toledo','Valencia','Valladolid','Zamora','Zaragoza','Ceuta','Melilla'));
+
 create domain Telefono numeric(9);
 
+create domain Dni char(9);
+
+create domain Web char(40)
+	constraint comprobacion_web
+		check(value in('%www..com%','%www..es%'));
+
+create domain Altura numeric(3)
+	constraint comprobacion_altura
+		check(value between 100 and 240);
+
+create domain Edad numeric(3)
+	constraint comprobacion_edad
+		check(value between 1 and 100);
+		
+create domain Color_ojos char(20)
+	constraint comprobacion_color 
+		check(value in('Azul','Verde','Marrón','Negro'));
+create domain Color_pelo char(20)
+	constraint comprobacion_color 
+		check(value in('Castaño','Moreno','Rubio','Pelirrojo'));
 
 
 create table cliente(
@@ -30,7 +52,7 @@ create table telefono_cliente(
 
 create table agente_casting(
 	cod_empleado char(20),
-	dni char(40),
+	dni Dni,
 	nombre char(20),
 	direccion char(40),
 	primary key(cod_empleado)
@@ -51,11 +73,13 @@ create table casting_cliente(
 	foreign key(cod_cliente) references cliente
 );
 
+
+
 create table casting_online(
 	cod_casting char(20),
 	num_personas int,
 	fecha date,
-	web char(40),
+	web Web,
 	foreign key(cod_casting) references casting
 );
 
@@ -69,7 +93,7 @@ create table casting_presencial(
 );
 
 create table representante(
-	dni char(40),
+	dni Dni),
 	nombre char(20),
 	direccion char(40),
 	telefono Telefono,
@@ -80,10 +104,10 @@ create table perfil(
 	cod_perfil char(20),
 	provincia Provincias,
 	sexo char (1) check(sexo in('M','F')),
-	rango_edad char(10),
-	rango_altura char(10),
-	color_pelo char(10),
-	color_ojos char(10),
+	rango_edad Edad,
+	rango_altura Altura,
+	color_pelo Color_pelo,
+	color_ojos Color_ojos,
 	especialidad char(1) check(especialidad in('A','M')),
 	experiencia boolean,
 	primary key(cod_perfil)
@@ -94,7 +118,7 @@ create table candidato(
 	direccion char(40),
 	nacimiento date,
 	importe Euros,
-	dni_representante char(40),
+	dni_representante Dni,
 	cod_perfil char(20),
 	primary key(cod_candidato),
 	foreign key(dni_representante) references representante,
@@ -117,7 +141,7 @@ create table telefono_candidato(
 
 create table adulto(
 	cod_candidato char(20),
-	dni char(40),
+	dni Dni,
 	foreign key(cod_candidato) references candidato
 );
 	
@@ -157,19 +181,6 @@ create table resultado_prueba(
 	foreign key(cod_prueba) references prueba,
 	foreign key(cod_candidato) references candidato
 );
-
-	
-	
-
-
-
-
-
-
-
-
-
-
 
 
 
