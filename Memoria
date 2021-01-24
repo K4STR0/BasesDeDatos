@@ -107,12 +107,12 @@ Tabla representante:
 	
 	
 Tabla resultado_pruebas:
-	cod_prueba(PK):A; cod_casting(PK):B; cod_prueba(PK):C; superada: D
+	cod_prueba(FK):A; cod_candidato(FK):B; superada: C
 	
-	A -> BCD
+	A -> BC
 	
 	Ya se encuentra en 3FN
-	R1:{A,B,C,D}
+	R1:{A,B,C}
 	
 Tabla fase:
 	cod_fase(PK): A; cod_casting(FK): B
@@ -126,7 +126,7 @@ Tabla fase:
 Tabla agente_casting:
 	cod_empleado(PK): A; dni: B; nombre: C; direccion: D
 	
-	A -> BCD
+	AB -> CD
 	
 	Ya se encuentra en 3FN
 	R1:{A,B,C,D}
