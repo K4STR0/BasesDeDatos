@@ -186,18 +186,14 @@ create table resultado_prueba(
 
 
 
-
-
-
 create role administrador;
 create role gestor;
 create role recepcionista;
 
-				   
-grant insert,select,update,delete on adulto,agente_casting,candidato,casting_cliente,casting_online,casting_presencial,
-cliente,fase,fase_prueba,niño,nombre_candidato,nombre_cliente,perfil,prueba,representante,resultado_prueba,
-telefono_candidato,telefono_cliente to administrador;
+				  
 
+grant all privileges on Casting to administrador;
+				   		   
 grant insert,select,update,delete on adulto,agente_casting,candidato,casting_cliente,casting_online,casting_presencial,
 cliente,fase,fase_prueba,niño,nombre_candidato,nombre_cliente,perfil,prueba,representante,resultado_prueba,
 telefono_candidato,telefono_cliente to gestor;
