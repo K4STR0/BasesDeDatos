@@ -189,17 +189,8 @@ create table resultado_prueba(
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+create role administrador;
+create role gestor;
+create role recepcionista;
 
 
