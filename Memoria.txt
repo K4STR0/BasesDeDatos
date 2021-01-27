@@ -133,8 +133,30 @@ Tabla agente_casting:
 	
 
 	
+
+3. 
+
+	Para poder realizar la conexión a la base de datos, debimos descargar de la aplicaión Stack Builder el jdbc necesario para poder unir java y postgres. Posteriormente,
+	debimos incluir el .jar que contenía el jdbc en java. Después de esto tuvimos un problema ya que al crear un nuevo proyecto no nos dejaba incluir dicho .jar en los
+	archivos del proyeto, y para poder solucionarlo, tuvimos que cambiar el archivo pom.xml para que pudieramos incluir el .jar en las dependencias.
 	
+	Por último incluímos el archivo .java que nos facilitaste con el que pudimos realizar la conexión con la base de datos.
 	
+4.
+	
+	Para la creación de usuarios, lo único que tuvimos que hacer fue crear los respectivos usuarios con las contraseñas que hacen referencia a su propio nombre y les asignamos
+	los privilegios pertinente. Al administrador se le dió el permiso de poder hacer cualquier operación en la base de datos "Casting". Al gestor se le dieron los privilegios
+	de incluir,borrar,actualizar o consultar información en todas las tablas. 
+	Y, por último, el recepcionista simplemente es capaz de consultar la información en todas las tablas.
+	
+
+5.
+
+	La modificación que hicimos en el archivo Postgres.java fue simplemente la capacidad de poder iniciar sesión a través de la consola del propio compilador, en este caso
+	Netbeans. Para ello, creamos 3 variables globales(usuario,contraseña y nombreBaseDatos) con las que mediante la inclusión de la herramienta Scanner pudimos almacenar
+	los datos introducidos por el teclado en dichas variables y posteriormente incluirlas en la función DriverManager.getConnection() y así seremos capaces de iniciar sesión con
+	el usuario que se prefiera.
+	Para finalizar, también incluimos la posibilidad de escribir por teclado la operación que se quiera realizar en la base de datos.
 	
 	
 	
