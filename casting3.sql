@@ -186,7 +186,7 @@ create table resultado_prueba(
 
 
 
-create user administrador;
+create user administrador with password 'administrador';
 create user gestor with password 'gestor';
 create user recepcionista with password 'recepcionista';
 
