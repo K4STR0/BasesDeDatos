@@ -126,6 +126,7 @@ Tabla fase:
 Tabla agente_casting:
 	cod_empleado(PK): A; dni: B; nombre: C; direccion: D
 	
+	
 	AB -> CD
 	
 	Ya se encuentra en 3FN
