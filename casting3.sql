@@ -199,9 +199,9 @@ create table casting_perfil(
 );
 
 create table contrata(
-	cod_cliente varchar(20),
 	cod_casting varchar(20),
-	foreign key(cod_cliente) references cliente,
+	cod_candidato varchar(20),
+	foreign key(cod_candidato) references candidato,
 	foreign key(cod_casting) references casting
 );
 		
