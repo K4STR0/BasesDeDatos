@@ -51,7 +51,7 @@ Language plpgsql;
 
 
 
-create trigger importe_total after insert on resultado_prueba
+create trigger contratar after insert on resultado_prueba
 for each row
 execute procedure contrata();		
 
