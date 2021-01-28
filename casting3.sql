@@ -190,10 +190,10 @@ create table casting_perfil(
 );
 
 create table contrata(
-cod_cliente varchar(20),
-cod_casting varchar(20),
-foreign key(cod_cliente) references cliente,
-foreign key(cod_casting) references casting
+	cod_cliente varchar(20),
+	cod_casting varchar(20),
+	foreign key(cod_cliente) references cliente,
+	foreign key(cod_casting) references casting
 );
 
 create user administrador with password 'administrador';
