@@ -19,3 +19,34 @@ Language plpgsql;
 create trigger importe_total after insert on resultado_prueba
 for each row
 execute procedure contrata();	
+
+
+
+
+create function seleccionados() returns trigger
+as
+$$
+
+declare numero_vacantes_totales integer := 0;
+declare tipo char(1) := (select tipo from casting where cod_casting=new.cod_casting);
+declare numero_vacantes_cogidas integer := (select count(cod_candidato) from contrata where cod_casting = new.cod_casting);
+
+begin
+	
+	
+	if tipo =='o' then numero_vacantes_totales = (select num_personas from casting_online where cod_casting = new.cod_casting);
+	if tipo =='p' then numero_vacantes_totales = (select num_personas from casting_presencial where cod_casting = new.cod_casting);
+	if numero_cacantes_cogidas < numero_vacantes_totales then insert into contrata values(new.cod_casting,new.cod_candidato);
+	
+return new;
+end
+$$
+Language plpgsql;
+
+
+
+
+
+
+create trigger seleccion before insert on contrata for each row
+execute procedure seleccionados();
