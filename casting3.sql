@@ -442,6 +442,14 @@ insert into casting_perfil values('casting6','perfil8');
 insert into casting_perfil values('casting6','perfil1');
 
 
+				   
+				   
+insert into casting_cliente values('casting1','alberto5621');
+insert into casting_cliente values('casting2','mario1123');
+insert into casting_cliente values('casting3',null);
+insert into casting_cliente values('casting4','juan1412');
+insert into casting_cliente values('casting5','pedro2212');
+insert into casting_cliente values('casting6','mario1123');				  
 
 
 insert into resultado_prueba values('candidato1','prueba1-c2f1',true);
