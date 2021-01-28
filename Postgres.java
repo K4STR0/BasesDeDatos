@@ -74,10 +74,12 @@ public class Postgres {
        // FASE IV probando la ejecuciÃ³n
     ResultSet rs = null;
     try {
-        String operacion;
-        System.out.println("Introduzca la operación que desea realizar en la base de datos: ");
-        operacion = scan.nextLine();
-        rs = s.executeQuery(operacion);
+        String operacion = "";
+        while(operacion != "exit"){
+            System.out.println("Introduzca la operación que desea realizar en la base de datos(exit para salir de la aplicacion): ");
+            operacion = scan.nextLine();
+            rs = s.executeQuery(operacion);
+        }
     }
     catch(SQLException se) {
                   System.out.println("Comprobando consulta de select"); 
@@ -97,5 +99,6 @@ public class Postgres {
                   se.printStackTrace();
                   System.exit(1);
     }
-    }
+  }
 }
+
