@@ -1,7 +1,21 @@
+			   
+create function actualizar_importe() returns trigger
+as
+$$
+begin
+update candidato 
+set importe = (select importe from candidato where cod_candidato = new.cod_candidato) + (select precio from prueba where cod_prueba = new.cod_prueba)
+where cod_candidato = new.cod_candidato;
+
+return new;
+end
+$$
+Language plpgsql;
 
 
 
-
+create trigger importe_total after insert on resultado_prueba for each row
+execute procedure actualizar_importe();
 
 
 
