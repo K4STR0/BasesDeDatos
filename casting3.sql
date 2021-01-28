@@ -182,7 +182,12 @@ create table resultado_prueba(
 	foreign key(cod_candidato) references candidato
 );
 
-
+create table casting_perfil(
+	cod_casting varchar(20),
+	cod_perfil varchar(20),
+	foreign key(cod_casting) references casting,
+	foreign key(cod_perfil) references perfil
+);
 
 
 
