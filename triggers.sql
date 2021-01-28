@@ -35,18 +35,16 @@ begin
 	
 	
 	if tipo =='o' then numero_vacantes_totales = (select num_personas from casting_online where cod_casting = new.cod_casting);
-	if tipo =='p' then numero_vacantes_totales = (select num_personas from casting_presencial where cod_casting = new.cod_casting);
-	if numero_cacantes_cogidas < numero_vacantes_totales then insert into contrata values(new.cod_casting,new.cod_candidato);
-	
+	else numero_vacantes_totales = (select num_personas from casting_online where cod_casting = new.cod_casting);
+	end if;
+	if numero_vacantes_cogidas < numero_vacantes_totales then insert into contrata values(new.cod_casting,new.cod_candidato);
+	end if;
 return new;
 end
 $$
 Language plpgsql;
 
 
-
-
-
-
 create trigger seleccion before insert on contrata for each row
 execute procedure seleccionados();
+
