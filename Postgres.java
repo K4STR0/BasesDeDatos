@@ -94,7 +94,7 @@ public class Postgres {
                               System.out.println("Error grave al mostrar datos"); 
                  }
             }catch(SQLException se) {
-                  System.out.println(se.toString()); 
+                  System.out.println(se.getMessage()); 
             }
         }
         System.out.println("Nos vemos la próxima vez. ¡Un Saludo!");
