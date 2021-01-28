@@ -73,32 +73,31 @@ public class Postgres {
        }
        // FASE IV probando la ejecuciÃ³n
     ResultSet rs = null;
-    try {
+
         String operacion = "";
-        while(operacion != "exit"){
-            System.out.println("Introduzca la operación que desea realizar en la base de datos(exit para salir de la aplicacion): ");
-            operacion = scan.nextLine();
-            rs = s.executeQuery(operacion);
+        while(!operacion.equals("exit")){
+            try{
+                System.out.println("Introduzca la operación que desea realizar en la base de datos(exit para salir de la aplicacion): ");
+                operacion = scan.nextLine();
+                if(!operacion.equals("exit")){
+                    rs = s.executeQuery(operacion);
+                }
+            
+                int index = 0;
+                try {
+                    while (rs.next()) {
+                        System.out.println("resultado fila" + index++ +" "
+                                + rs.getString(1) + " " + rs.getString(2) ); 
+                    }
+                }
+                catch(SQLException se) {
+                              System.out.println("Error grave al mostrar datos"); 
+                 }
+            }catch(SQLException se) {
+                  System.out.println("\n\nLa operación introducida es incorrecta\n"); 
+            }
         }
+        System.out.println("Nos vemos la próxima vez. ¡Un Saludo!");
     }
-    catch(SQLException se) {
-                  System.out.println("Comprobando consulta de select"); 
-                  se.printStackTrace();
-                  System.exit(1);
-    }
-    // FASE V viendo el resultado
-    int index = 0;
-    try {
-        while (rs.next()) {
-            System.out.println("resultado fila" + index++ +" "
-                    + rs.getString(1) + " " + rs.getString(2) ); 
-        }
-    }
-    catch(SQLException se) {
-                  System.out.println("Error grave al mostrar datos"); 
-                  se.printStackTrace();
-                  System.exit(1);
-    }
-  }
 }
 
