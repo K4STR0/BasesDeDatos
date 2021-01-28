@@ -24,7 +24,6 @@ public class Postgres {
     
     
     public static void main(String[] args) {
-        // FASES UNO  cargar el controlador de postgres
         System.out.println("probando si funciona el driver postgres");
         Scanner scan= new Scanner(System.in);
         try{
@@ -37,7 +36,6 @@ public class Postgres {
             System.exit(1);
         }
        System.out.println("Driver cargado....empieza la conexiÃ³n"); 
-       // FASE DOS probar el manejador con su conexiÃ³n (ojo cambiar usuario y password)
        Connection c = null;
        
        try {
@@ -86,18 +84,21 @@ public class Postgres {
                 int index = 0;
                 try {
                     while (rs.next()) {
-                        System.out.println("resultado fila" + index++ +" "
-                                + rs.getString(1) + " " + rs.getString(2) ); 
+                        if(!operacion.equals("exit")){
+                            System.out.println("resultado fila" + index++ +" "
+                                    + rs.getString(1) + " " + rs.getString(2) );
+                        }
                     }
                 }
                 catch(SQLException se) {
                               System.out.println("Error grave al mostrar datos"); 
                  }
             }catch(SQLException se) {
-                  System.out.println("\n\nLa operación introducida es incorrecta\n"); 
+                  System.out.println(se.toString()); 
             }
         }
         System.out.println("Nos vemos la próxima vez. ¡Un Saludo!");
     }
 }
+
 
