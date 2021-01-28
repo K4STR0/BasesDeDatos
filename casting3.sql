@@ -413,15 +413,13 @@ insert into resultado_prueba values('candidato9','prueba1-c6f1',true);
 insert into resultado_prueba values('candidato9','prueba2-c6f1',false);
 insert into resultado_prueba values('candidato4','prueba1-c6f1',true);
 insert into resultado_prueba values('candidato4','prueba1-c6f2',true);
-insert into resultado_prueba values('candidato4','prueba2-c6f2',true);
 insert into resultado_prueba values('candidato4','prueba1-c6f3',true);
 insert into resultado_prueba values('candidato4','prueba2-c6f3',false);
 insert into resultado_prueba values('candidato2','prueba1-c6f1',true);
 insert into resultado_prueba values('candidato2','prueba1-c6f2',true);
-insert into resultado_prueba values('candidato2','prueba2-c6f2',true);
 insert into resultado_prueba values('candidato2','prueba1-c6f3',true);
 insert into resultado_prueba values('candidato2','prueba2-c6f3',true);
-insert into resultado_prueba values('candidato2','prueba3-c6f3',true);				   
+insert into resultado_prueba values('candidato2','prueba3-c6f3',true);					   
 				   
 				   
 				   
