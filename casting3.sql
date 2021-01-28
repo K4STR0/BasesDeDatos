@@ -189,7 +189,12 @@ create table casting_perfil(
 	foreign key(cod_perfil) references perfil
 );
 
-
+create table contrata(
+cod_cliente varchar(20),
+cod_casting varchar(20),
+foreign key(cod_cliente) references cliente,
+foreign key(cod_casting) references casting
+);
 
 create user administrador with password 'administrador';
 create user gestor with password 'gestor';
