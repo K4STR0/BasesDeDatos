@@ -12,19 +12,19 @@ create domain Web varchar(40)
 	constraint comprobacion_web
 		check(value like ('%www.%%.com%')or value like ('%www.%%.es%'));
 
-create domain Altura numeric(3)
+create domain Altura varchar(10)
 	constraint comprobacion_altura
-		check(value between 100 and 240);
+		check(value in('100-130','130-160','160-180','170-200','170-195','160-175','150-190','190-210','140-190','120-160'));
 
-create domain Edad numeric(3)
+create domain Edad varchar(10)
 	constraint comprobacion_edad
-		check(value between 1 and 100);
+		check(value in('2-10','10-15','15-20','20-30','30-40','40-50','50-60','60-70','70-80','80-90','35-60','20-60','18-30','20-25','35-50'));
 		
 create domain Color_ojos varchar(20)
-	constraint comprobacion_color 
+	constraint comprobacion_colorOjos 
 		check(value in('Azul','Verde','Marrón','Negro'));
 create domain Color_pelo varchar(20)
-	constraint comprobacion_color 
+	constraint comprobacion_colorPelo
 		check(value in('Castaño','Moreno','Rubio','Pelirrojo'));
 create domain Correo varchar(40)
 		constraint comprobacion_correo
@@ -205,6 +205,57 @@ create table contrata(
 	foreign key(cod_casting) references casting
 );
 		
+
+				   
+				   
+				   
+				   
+				   
+	create function actualizar_importe() returns trigger
+as
+$$
+begin
+update candidato 
+set importe = (select importe from candidato where cod_candidato = new.cod_candidato) + (select precio from prueba where cod_prueba = new.cod_prueba)
+where cod_candidato = new.cod_candidato;
+
+return new;
+end
+$$
+Language plpgsql;
+
+
+
+create trigger importe_total after insert on resultado_prueba for each row
+execute procedure actualizar_importe();
+				   
+				   
+				   
+		   
+				   
+				   
+				   
+create user administrador with password 'administrador';
+create user gestor with password 'gestor';
+create user recepcionista with password 'recepcionista';
+
+				  
+
+grant all privileges on database Casting to administrador;
+				   		   
+grant insert,select,update,delete on adulto,agente_casting,candidato,casting_cliente,casting_online,casting_presencial,
+cliente,fase,fase_prueba,niño,nombre_candidato,nombre_cliente,perfil,prueba,representante,resultado_prueba,
+telefono_candidato,telefono_cliente to gestor;
+
+grant select on adulto,agente_casting,candidato,casting_cliente,casting_online,casting_presencial,
+cliente,fase,fase_prueba,niño,nombre_candidato,nombre_cliente,perfil,prueba,representante,resultado_prueba,
+telefono_candidato,telefono_cliente to recepcionista;	 			   
+				   
+				   
+				   
+				   
+				  			   
+				   
 				   
 				   
 				   
@@ -254,14 +305,14 @@ insert into fase values('casting6','fase4c6');
 
 
 
-insert into perfil values('perfil1','Barcelona','M','35-50','160-180','Castaño','Azules','A',false);
-insert into perfil values('perfil2','Madrid','F','20-60','170-200','Rubio','Marrón','M',true);
-insert into perfil values('perfil7','Madrid','M','20-60','170-200','Negro','Marrón','M',true);
-insert into perfil values('perfil3','Sevilla','M','18-30','150-190','Rubio','Marrón','M',false);
-insert into perfil values('perfil4','Valencia','M','10-15','130-160','Negro','Marrón','M',true);
-insert into perfil values('perfil8','Valencia','F','10-15','130-160','Negro','Marrón','M',true);
-insert into perfil values('perfil5','Cantabria','F','20-25','170-195','Negro','Verdes','M',false);
-insert into perfil values('perfil6','Lugo','M','60-70','160-175','Castaño','Azules','A',true);
+insert into perfil values('perfil1','Barcelona','M','35-50','160-180','Castaño','Azul','A',false);
+insert into perfil values('perfil2','Madrid','F','20-60','170-200','Moreno','Marrón','M',true);
+insert into perfil values('perfil7','Madrid','M','20-30','170-200','Moreno','Marrón','M',true);
+insert into perfil values('perfil3','Sevilla','M','18-30','150-190','Rubio','Negro','M',false);
+insert into perfil values('perfil4','Valencia','M','10-15','130-160','Moreno','Marrón','M',true);
+insert into perfil values('perfil8','Valencia','F','10-15','130-160','Moreno','Marrón','M',true);
+insert into perfil values('perfil5','Cantabria','F','20-25','170-195','Moreno','Verde','M',false);
+insert into perfil values('perfil6','Lugo','M','60-70','160-175','Castaño','Azul','A',true);
 
 
 
@@ -283,7 +334,7 @@ insert into candidato values('candidato5','Ruben','Málaga',686546784,'1996/03/1
 insert into candidato values('candidato6','Alfonso','Sevilla',754654768,'2000/02/28',0,'07543214P','perfil3');
 insert into candidato values('candidato7','Alicia','Madrid',917546876,'1999/10/17',0,null,'perfil2');
 insert into candidato values('candidato8','Jose','Madrid',843564678,'2001/12/01',0,'07543214P','perfil7');
-insert into candidato values'candidato9','Francisco','Vigo',676789876,'1955/09/23',0,'08654654P','perfil6');
+insert into candidato values('candidato9','Francisco','Vigo',676789876,'1955/09/23',0,'08654654P','perfil6');
 
 
 
@@ -301,21 +352,42 @@ insert into niño values('candidato1','08543453G');
 insert into niño values('candidato3','09765453P');
 
 
-insert into pruebas values('prueba1-c2f1','avion','freir un huevo',20,'fase1c2');
-insert into pruebas values('prueba2-c2f1','avion','preparan un postre',15,'fase1c2');
-insert into pruebas values('prueba1-c2f2','flor','hacer costillas',31,'fase2c2');
-insert into pruebas values('prueba2-c2f2','flor','cocinar un risotto',24,'fase2c2');
-insert into pruebas values('prueba1-c3f1','coche','modular la voz',17,'fase1c3');
-insert into pruebas values('prueba2-c3f1','rosa','interpretar un personaje',24,'fase1c3');
-insert into pruebas values('prueba3-c3f1','amapola','hacer una escena',50,'fase1c3');
-insert into pruebas values('prueba1-c6f1','flor','conducir un coche',33,'fase1c6');
-insert into pruebas values('prueba1-c6f2','anuncio','hacer un trompo',64,'fase2c6');
-insert into pruebas values('prueba2-c6f2','perro','hacer una interpretacion en coche',32,'fase2c6');
-insert into pruebas values('prueba1-c6f3','maquina','hacer una carrera',10,'fase3c6');
-insert into pruebas values('prueba2-c6f3','flor','tirarse de un coche en marcha',4,'fase3c6');
-insert into pruebas values('prueba3-c6f3','garaje','saltar de un avion',43,'fase3c6');
+insert into prueba values('prueba1-c2f1','avion','freir un huevo',20);
+insert into prueba values('prueba2-c2f1','avion','preparan un postre',15);
+insert into prueba values('prueba1-c2f2','flor','hacer costillas',31);
+insert into prueba values('prueba2-c2f2','flor','cocinar un risotto',24);
+insert into prueba values('prueba1-c3f1','coche','modular la voz',17);
+insert into prueba values('prueba2-c3f1','rosa','interpretar un personaje',24);
+insert into prueba values('prueba3-c3f1','amapola','hacer una escena',50);
+insert into prueba values('prueba1-c6f1','flor','conducir un coche',33);
+insert into prueba values('prueba1-c6f2','anuncio','hacer un trompo',64);
+insert into prueba values('prueba2-c6f1','perro','hacer una interpretacion en coche',32);
+insert into prueba values('prueba1-c6f3','maquina','hacer una carrera',10);
+insert into prueba values('prueba2-c6f3','flor','tirarse de un coche en marcha',4);
+insert into prueba values('prueba3-c6f3','garaje','saltar de un avion',43);
+				   
+				   
 
 
+insert into fase_prueba values('fase1c2','prueba1-c2f1');
+insert into fase_prueba values('fase1c2','prueba2-c2f1');
+insert into fase_prueba values('fase2c2','prueba1-c2f2');
+insert into fase_prueba values('fase2c2','prueba2-c2f2');
+insert into fase_prueba values('fase1c3','prueba1-c3f1');
+insert into fase_prueba values('fase1c3','prueba2-c3f1');
+insert into fase_prueba values('fase1c3','prueba3-c3f1');
+insert into fase_prueba values('fase1c6','prueba1-c6f1');
+insert into fase_prueba values('fase2c6','prueba1-c6f2');
+insert into fase_prueba values('fase2c6','prueba2-c6f2');
+insert into fase_prueba values('fase3c6','prueba1-c6f3');
+insert into fase_prueba values('fase3c6','prueba2-c6f3');
+insert into fase_prueba values('fase3c6','prueba3-c6f3');
+
+
+				   
+
+				   
+				   
 insert into casting_perfil values('casting1','perfil7');
 insert into casting_perfil values('casting2','perfil4');
 insert into casting_perfil values('casting2','perfil8');
@@ -329,27 +401,27 @@ insert into casting_perfil values('casting6','perfil1');
 
 
 
-insert into resultado_pruebas values('casting2','candidato1','prueba1-c2f1',true);
-insert into resultado_pruebas values('casting2','candidato1','prueba2-c2f1',true);
-insert into resultado_pruebas values('casting2','candidato1','prueba1-c2f2',false);
-insert into resultado_pruebas values('casting2','candidato3','prueba1-c2f1',true);
-insert into resultado_pruebas values('casting2','candidato3','prueba2-c2f1',true);
-insert into resultado_pruebas values('casting2','candidato3','prueba1-c2f2',true);
-insert into resultado_pruebas values('casting2','candidato3','prueba2-c2f2',true);
-insert into resultado_pruebas values('casting3','candidato4','prueba1-c3f1',false);
-insert into resultado_pruebas values('casting6','candidato9','prueba1-c6f1',true);
-insert into resultado_pruebas values('casting6','candidato9','prueba2-c6f1',false);
-insert into resultado_pruebas values('casting6','candidato4','prueba1-c6f1',true);
-insert into resultado_pruebas values('casting6','candidato4','prueba1-c6f2',true);
-insert into resultado_pruebas values('casting6','candidato4','prueba2-c6f2',true);
-insert into resultado_pruebas values('casting6','candidato4','prueba1-c6f3',true);
-insert into resultado_pruebas values('casting6','candidato4','prueba2-c6f3',false);
-insert into resultado_pruebas values('casting6','candidato2','prueba1-c6f1',true);
-insert into resultado_pruebas values('casting6','candidato2','prueba1-c6f2',true);
-insert into resultado_pruebas values('casting6','candidato2','prueba2-c6f2',true);
-insert into resultado_pruebas values('casting6','candidato2','prueba1-c6f3',true);
-insert into resultado_pruebas values('casting6','candidato2','prueba2-c6f3',true);
-insert into resultado_pruebas values('casting6','candidato2','prueba3-c6f3',true);				   
+insert into resultado_prueba values('candidato1','prueba1-c2f1',true);
+insert into resultado_prueba values('candidato1','prueba2-c2f1',true);
+insert into resultado_prueba values('candidato1','prueba1-c2f2',false);
+insert into resultado_prueba values('candidato3','prueba1-c2f1',true);
+insert into resultado_prueba values('candidato3','prueba2-c2f1',true);
+insert into resultado_prueba values('candidato3','prueba1-c2f2',true);
+insert into resultado_prueba values('candidato3','prueba2-c2f2',true);
+insert into resultado_prueba values('candidato4','prueba1-c3f1',false);
+insert into resultado_prueba values('candidato9','prueba1-c6f1',true);
+insert into resultado_prueba values('candidato9','prueba2-c6f1',false);
+insert into resultado_prueba values('candidato4','prueba1-c6f1',true);
+insert into resultado_prueba values('candidato4','prueba1-c6f2',true);
+insert into resultado_prueba values('candidato4','prueba2-c6f2',true);
+insert into resultado_prueba values('candidato4','prueba1-c6f3',true);
+insert into resultado_prueba values('candidato4','prueba2-c6f3',false);
+insert into resultado_prueba values('candidato2','prueba1-c6f1',true);
+insert into resultado_prueba values('candidato2','prueba1-c6f2',true);
+insert into resultado_prueba values('candidato2','prueba2-c6f2',true);
+insert into resultado_prueba values('candidato2','prueba1-c6f3',true);
+insert into resultado_prueba values('candidato2','prueba2-c6f3',true);
+insert into resultado_prueba values('candidato2','prueba3-c6f3',true);				   
 				   
 				   
 				   
@@ -357,56 +429,5 @@ insert into resultado_pruebas values('casting6','candidato2','prueba3-c6f3',true
 				   
 				   
 				   
-				   
-				   
-			   
-				   
-				   
-				   
-				   
-				   		   
-				   
-				   
-create function actualizar_importe() returns trigger
-as
-$$
-begin
-update candidato 
-set importe = importe + (select precio from prueba where cod_prueba = new.cod_prueba)
-where cod_candidato = new.cod_candidato;
-
-return new;
-end
-$$
-Language plpgsql;
-
-
-
-create trigger importe_total after insert on resultado_prueba for each row
-execute procedure actualizar_importe();				   
-				   
-				   
-				   
-				   
-				   
-				   
-				   
-				   
-				   
-create user administrador with password 'administrador';
-create user gestor with password 'gestor';
-create user recepcionista with password 'recepcionista';
-
-				  
-
-grant all privileges on database Casting to administrador;
-				   		   
-grant insert,select,update,delete on adulto,agente_casting,candidato,casting_cliente,casting_online,casting_presencial,
-cliente,fase,fase_prueba,niño,nombre_candidato,nombre_cliente,perfil,prueba,representante,resultado_prueba,
-telefono_candidato,telefono_cliente to gestor;
-
-grant select on adulto,agente_casting,candidato,casting_cliente,casting_online,casting_presencial,
-cliente,fase,fase_prueba,niño,nombre_candidato,nombre_cliente,perfil,prueba,representante,resultado_prueba,
-telefono_candidato,telefono_cliente to recepcionista;	   
 				   
 
