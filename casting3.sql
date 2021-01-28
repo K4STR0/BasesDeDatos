@@ -36,7 +36,6 @@ create domain Correo varchar(40)
 create table cliente(
 	cod_cliente varchar(20),
 		primary key(cod_cliente),
-	nombre varchar(40),
 	direccion varchar(40),
 	correo Correo,
 	actividad char(2) check(actividad in ('m','pc'))
@@ -63,6 +62,14 @@ create table agente_casting(
 	nombre varchar(20),
 	direccion varchar(40),
 	primary key(cod_empleado)
+);
+
+create table nombre_agente(
+	cod_empleado varchar(20),
+	nombre varchar(20),
+	apellido1 varchar(20),
+	apellido2 varchar(20),
+	foreign key(cod_empleado) references agente_casting
 );
 
 create table casting(
@@ -100,12 +107,21 @@ create table casting_presencial(
 );
 
 create table representante(
-	dni Dni,
-	nombre varchar(20),
+	dni DNI,
 	direccion varchar(40),
 	telefono Telefono,
 	primary key(dni)
 );
+
+
+create table nombre_representante(
+	dni varchar(20),
+	nombre varchar(20),
+	apellido1 varchar(20),
+	apellido2 varchar(20),
+	foreign key(dni) references representante
+);
+
 	
 create table perfil(
 	cod_perfil varchar(20),
@@ -122,7 +138,6 @@ create table perfil(
 
 create table candidato(
 	cod_candidato varchar(20),
-	nombre varchar(20),
 	direccion varchar(40),
 	nacimiento date,
 	importe Euros,
@@ -155,9 +170,17 @@ create table adulto(
 	
 create table niño(
 	cod_candidato varchar(20),
-	nombre_tutor varchar(20),
 	foreign key(cod_candidato) references candidato
 );
+
+create table nombre_tutor{
+	cod_candidato varchar(20),
+	nombre varchar(20),
+	apellido1 varchar(20),
+	apellido2 varchar(20),
+	foreign key(cod_candidato) references candidato
+
+};
 
 create table prueba(
 	cod_prueba varchar(20),
@@ -258,12 +281,12 @@ telefono_candidato,telefono_cliente to recepcionista;
 				   
 				   
 				   
-insert into cliente values('paco2345','paco','barcelona','paco2345@gmail.com','m');
-insert into cliente values('pedro2212','pedro','madrid','pedro2212@gmail.com','pc');
-insert into cliente values('juan1412','juan','santander','juan1412@gmail.com','m');
-insert into cliente values('mario1123','mario','madrid','brachosaurius@gmail.com','pc');
-insert into cliente values('alberto5621','alberto','salamanca','alberto5621@gmail.com','pc');
-insert into cliente values('miguel4344','miguel','vigo','miguelperez@gmail.com','m');
+insert into cliente values('paco2345','barcelona','paco2345@gmail.com','m');
+insert into cliente values('pedro2212','madrid','pedro2212@gmail.com','pc');
+insert into cliente values('juan1412','santander','juan1412@gmail.com','m');
+insert into cliente values('mario1123','madrid','brachosaurius@gmail.com','pc');
+insert into cliente values('alberto5621','salamanca','alberto5621@gmail.com','pc');
+insert into cliente values('miguel4344','vigo','miguelperez@gmail.com','m');
 
 
 
@@ -305,10 +328,15 @@ insert into casting_presencial values('casting3',50,'empleado3321');
 insert into casting_presencial values('casting6',20,'empleado2341');
 
 
-insert into agente_casting values('empleado2341','08564324D','martin','pamplona');
-insert into agente_casting values('empleado3321','07654343P','julian','bilbao');
-insert into agente_casting values('empleado1564','06545663C','pablo','madrid');
-insert into agente_casting values('empleado5532','08654324K','pedro','pamplona');
+insert into agente_casting values('empleado2341','08564324D','pamplona');
+insert into agente_casting values('empleado3321','07654343P','bilbao');
+insert into agente_casting values('empleado1564','06545663C','madrid');
+insert into agente_casting values('empleado5532','08654324K','pamplona');
+
+insert into nombre_cliente values('empleado2341','Martin','Perez','García');
+insert into nombre_cliente values('empleado3321','Julian','Gutierrez','Dominguez');
+insert into nombre_cliente values('empleado1564','Pablo','Gomez','Ramos');
+insert into nombre_cliente values('empleado5532','Pedro','Fernandez','Sanz');
 
 
 
@@ -335,24 +363,31 @@ insert into perfil values('perfil6','Lugo','M','60-70','160-175','Castaño','Azu
 
 
 
-insert into representante values('08654654P','fernado','salamanca',645324321); 
-insert into representante values('07543214P','juan','asturias',743543221); 
-insert into representante values('09654363Y','maria','pontevedra',765436547); 
-insert into representante values('07654322P','alberto','sevilla',985436548); 
-insert into representante values('08543432C','raul','alicante',622677881); 
+insert into representante values('08654654P','salamanca',645324321); 
+insert into representante values('07543214P','asturias',743543221); 
+insert into representante values('09654363Y','pontevedra',765436547); 
+insert into representante values('07654322P','sevilla',985436548); 
+insert into representante values('08543432C','alicante',622677881); 
+
+insert into nombre_representante values('08654654P','Fernando','Perez','García');
+insert into nombre_cliente values('07543214P','Juan','Gutierrez','Dominguez');
+insert into nombre_cliente values('09654363Y','Maria','Gomez','Ramos');
+insert into nombre_cliente values('07654322P','Alberto','Fernandez','Sanz');
+insert into nombre_cliente values('08543432C','Raul','Lopez','Castillo');
 
 
 
 
-insert into candidato values('candidato1','Miguel','Castellon','2009/06/25',0,'08654654P','perfil4');
-insert into candidato values('candidato2','Alberto','Barcelona','1980/07/13',0,'08543432C','perfil1');
-insert into candidato values('candidato3','Miguel','Alicante','2008/01/15',0,null,'perfil4');
-insert into candidato values('candidato4','Teresa','Valencia','1975/05/26',0,'09654363Y','perfil8');
-insert into candidato values('candidato5','Ruben','Málaga','1996/03/10',0,'08654654P','perfil3');
-insert into candidato values('candidato6','Alfonso','Sevilla','2000/02/28',0,'07543214P','perfil3');
-insert into candidato values('candidato7','Alicia','Madrid','1999/10/17',0,null,'perfil2');
-insert into candidato values('candidato8','Jose Manuel','Madrid','2001/12/01',0,'07543214P','perfil7');
-insert into candidato values('candidato9','Francisco','Vigo','1955/09/23',0,'08654654P','perfil6');
+
+insert into candidato values('candidato1','Castellon','2009/06/25',0,'08654654P','perfil4');
+insert into candidato values('candidato2','Barcelona','1980/07/13',0,'08543432C','perfil1');
+insert into candidato values('candidato3','Alicante','2008/01/15',0,null,'perfil4');
+insert into candidato values('candidato4','Valencia','1975/05/26',0,'09654363Y','perfil8');
+insert into candidato values('candidato5','Málaga','1996/03/10',0,'08654654P','perfil3');
+insert into candidato values('candidato6','Sevilla','2000/02/28',0,'07543214P','perfil3');
+insert into candidato values('candidato7','Madrid','1999/10/17',0,null,'perfil2');
+insert into candidato values('candidato8','Madrid','2001/12/01',0,'07543214P','perfil7');
+insert into candidato values('candidato9','Vigo','1955/09/23',0,'08654654P','perfil6');
 
 
 
@@ -391,8 +426,12 @@ insert into adulto values('candidato8','07456378B');
 insert into adulto values('candidato9','08546743J');
 
 
-insert into niño values('candidato1','08543453G');
-insert into niño values('candidato3','09765453P');
+insert into niño values('candidato1');
+insert into niño values('candidato3');
+
+insert into nombre_tutor values('candidato1','Andrea','Perez','García');
+insert into nombre_tutor values('candidato3','Ayax','Gutierrez','Dominguez');
+
 
 
 insert into prueba values('prueba1-c2f1','avion','freir un huevo',20);
